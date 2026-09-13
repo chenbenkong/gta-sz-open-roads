@@ -121,6 +121,40 @@ this.engine.setHardwareScalingLevel(1 / ratio);
 `scripts/check-resolution-math.mjs` 对 7 种视口 × 3 种 DPR × 3 档画质做断言，
 确保任何组合都不会把渲染分辨率压到画布之下。
 
+**后处理链顺序（主视口变成纯色的修复）。** Babylon 的
+`DefaultRenderingPipeline` 只要**任何一个属性**被写入，就会重建整条后处理链，
+并把 `city-optics` 的各个 pass 重新追加到相机上。而 `SSAO2RenderingPipeline`
+的 `SSAOOriginalSceneColor`（一个 `PassPostProcess`）**必须第一个**拿到 scene
+target，否则「场景颜色 → 屏幕」这一步永远走不完，视口只剩 clearColor 经
+imageProcessing 后的结果 —— 表现出来就是一片纯色，并且**颜色随 MSAA 档位变化**
+（4× 出绿、2× 出黑、FXAA 出噪点），极具误导性。
+
+触发点是构造函数末尾无条件执行 `setQuality('high')`：那时 `createCinematicLook`
+尚未运行，`applyQuality` 在管线还没进入作者态时改写了 `samples` / `fxaaEnabled` /
+`bloomEnabled`，链被重排且再也修不回来。
+
+修复（`src/city-world.ts`）：
+
+- `applyQuality` 增加硬守卫 `if (!this.cinematic) return;` —— cinematic 就绪前
+  **只记录档位，绝不触碰管线**；
+- MSAA/FXAA 改走既有的 `applyAntiAliasing` 路径（它会用
+  `_forceBlockMaterialDirtyMechanism` 抑制 Babylon 的材质 dirty 风暴，并自行
+  `prepare()`），其余质量项在同一抑制块里批量写入，最后统一 `syncPostChain()` 修序；
+- 构造函数只解析 `?quality=` 参数，真正的落档移到 `createCinematicLook` 之后；
+- `autoTune` 增加就绪守卫，加载期间不可能调档。
+
+`scripts/check-frame-content.mjs` 是这一项的回归闸门：它**只看像素**，截取 3D 视口
+中一块避开全部 HUD 的区域，统计颜色数 / 单色占比 / 亮度标准差 / 水平梯度 / 全黑占比，
+逐档（high / balanced / low / auto）以及行驶中各验证一次，任一不达标即失败。
+纯色画面从此无法通过验证。
+
+**界面字体过细。** 原字体栈以 `'PingFang SC'`（仅 macOS 提供）打头，Windows 上
+回退到 `system-ui`（微软雅黑）的 400 字重；全站 31 处 10–13px 小字在这个组合下
+横画极细、整体发灰。现改为跨平台字体栈
+（`HarmonyOS Sans SC` / `MiSans` / `Microsoft YaHei UI` / `Microsoft YaHei` /
+`Source Han Sans SC` / `Segoe UI`），并给界面小字统一加 `-webkit-text-stroke`
+细描边与 500 字重 —— **字号与布局均未改动**，只提亮笔画。
+
 ---
 
 ## 数据来源与许可
