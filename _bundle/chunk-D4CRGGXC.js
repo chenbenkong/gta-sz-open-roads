@@ -1,0 +1,2 @@
+globalThis.__ASSET_BASE__="/gta-sz-open-roads/";
+import{a as n}from"./chunk-SDIGWJ4W.js";import{a as r}from"./chunk-FUUFYH4E.js";var t=class extends n{constructor(){super(...arguments),this.initPriority=-1,this.type="SceneReady"}_executeEvent(e,a){return this._execute(e),!0}_preparePendingTasks(e){}_cancelPendingTasks(e){}getClassName(){return"FlowGraphSceneReadyEventBlock"}};r("FlowGraphSceneReadyEventBlock",t);export{t as a};

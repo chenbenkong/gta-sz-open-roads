@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "file": "rider.glb",
+  "sourceFile": "high-visibility jacket 3d model.glb",
+  "sourceSha256": "433d0107ba9ae12e9969c1227f3d0acf78635d79770f5cebac112f49a15cf81a",
+  "sourceBytes": 56410040,
+  "derivation": "Complete left front-facing figure with its own back retained. Side-view and reversed duplicate removed. Silhouette reduction, deterministic 17-bone soft weights, in-place Idle/Walk/Run skeletal animation.",
+  "license": "User-supplied Tripo asset; no independent external licence assertion.",
+  "height": 1.78,
+  "units": "metres",
+  "forward": "glTF +Z; Blender -Y",
+  "floor": 0,
+  "triangles": 60000,
+  "bones": 17,
+  "sourceTriangles": 1888391,
+  "animations": [
+    {
+      "name": "Rider_Idle",
+      "frames": 60,
+      "seconds": 2
+    },
+    {
+      "name": "Rider_Walk",
+      "frames": 30,
+      "seconds": 1
+    },
+    {
+      "name": "Rider_Run",
+      "frames": 22,
+      "seconds": 0.7333333333333333
+    }
+  ],
+  "bytes": 2967904,
+  "sha256": "7e1f3d5b4f23e3b2f235e3a7807a383ba1105d5bed7c9ce4703320ba7208c72c",
+  "limitations": "Simple scan-derived rig: no fingers, facial blend shapes, runtime terrain foot IK or cloth simulation. Helmet ears included in total 1.78m display height.",
+  "selection": {
+    "BlenderXLessThan": -0.16
+  },
+  "preview": "output/rider/rider-contact-sheet.png",
+  "gait": {
+    "walk": {
+      "cycleSeconds": 1,
+      "stanceFraction": 0.62,
+      "authoredSpeed": 1.032258064516129,
+      "swingLift": 0.115,
+      "method": "baked two-bone IK with forward knee poles and sole contacts"
+    },
+    "run": {
+      "cycleSeconds": 0.7333333333333333,
+      "stanceFraction": 0.4,
+      "authoredSpeed": 2.590909090909091,
+      "swingLift": 0.34,
+      "method": "baked two-bone IK with forward knee poles and sole contacts"
+    }
+  },
+  "gaitProcessor": {
+    "file": "scripts/character_gait.py",
+    "sha256": "3227e33b0a5309e6a896a375b872eca841f2177aee3aa47c5d7e5312541d91ac",
+    "rebake": "scripts/rebake_character_gaits.py"
+  },
+  "compression": {
+    "algorithm": "EXT_meshopt_compression",
+    "beforeBytes": 4828280
+  }
+}

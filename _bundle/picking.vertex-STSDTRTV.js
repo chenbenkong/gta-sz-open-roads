@@ -1,0 +1,2 @@
+globalThis.__ASSET_BASE__="/gta-sz-open-roads/";
+import{a}from"./chunk-5YEZL2YP.js";import"./chunk-WFR37FYP.js";import"./chunk-L2XQ7UCU.js";import"./chunk-H6GLBIHT.js";import"./chunk-6EGGU5NU.js";import"./chunk-43DX7GQ5.js";import"./chunk-LIH5GBIY.js";import"./chunk-LXUOYKU5.js";import"./chunk-IWEFQTOH.js";import"./chunk-XA72MHQ3.js";import"./chunk-HTIJ5P5S.js";import"./chunk-RZKNP5ZY.js";export{a as pickingVertexShader};

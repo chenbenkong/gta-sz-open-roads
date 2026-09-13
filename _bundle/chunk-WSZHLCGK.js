@@ -1,0 +1,2 @@
+globalThis.__ASSET_BASE__="/gta-sz-open-roads/";
+import{d as t,x as n}from"./chunk-3ODN7KUL.js";var a=class extends n{constructor(r){super();let s=r.glTF,i=s.animations?.map(o=>o._babylonAnimationGroup)||[];this.animationGroups=this.registerDataOutput("animationGroups",t,i);let e=s.nodes?.map(o=>o._babylonTransformNode)||[];this.nodes=this.registerDataOutput("nodes",t,e)}getClassName(){return"FlowGraphGLTFDataProvider"}};export{a};

@@ -1,0 +1,2 @@
+globalThis.__ASSET_BASE__="/gta-sz-open-roads/";
+import{a,b}from"./chunk-BWMTMJ2U.js";import"./chunk-H6Y6S562.js";import"./chunk-GLRKFZN2.js";import"./chunk-WBWJY57I.js";import"./chunk-3OX3WUUO.js";import"./chunk-OI2DXRAO.js";import"./chunk-FUUFYH4E.js";import"./chunk-OXDZYSSX.js";import"./chunk-UB7Q6D3E.js";import"./chunk-V4FIRZLM.js";import"./chunk-G2D4ASO3.js";import"./chunk-7UDGQDZ4.js";import"./chunk-UM4EAY3W.js";import"./chunk-UQK5BPAB.js";import"./chunk-D7LM6LB3.js";import"./chunk-RZKNP5ZY.js";export{a as _WebAudioStaticSound,b as _WebAudioStaticSoundBuffer};

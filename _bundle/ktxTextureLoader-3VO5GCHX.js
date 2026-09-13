@@ -1,0 +1,2 @@
+globalThis.__ASSET_BASE__="/gta-sz-open-roads/";
+import{b as a}from"./chunk-VRWBWIDJ.js";import"./chunk-33UFIKPB.js";import"./chunk-RVJS2QUW.js";import"./chunk-4IOQDPHH.js";import"./chunk-AYQJFUMC.js";import"./chunk-HTIJ5P5S.js";import"./chunk-FUUFYH4E.js";import"./chunk-OXDZYSSX.js";import"./chunk-UB7Q6D3E.js";import"./chunk-UM4EAY3W.js";import"./chunk-UQK5BPAB.js";import"./chunk-D7LM6LB3.js";import"./chunk-RZKNP5ZY.js";export{a as _KTXTextureLoader};

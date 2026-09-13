@@ -1,0 +1,2 @@
+globalThis.__ASSET_BASE__="/gta-sz-open-roads/";
+import{p as o,t as r,x as s}from"./chunk-3ODN7KUL.js";import{a as u}from"./chunk-FUUFYH4E.js";var e=class extends s{constructor(t){super(t),this.config=t,this.output=this.registerDataOutput("output",o(t.value))}_updateOutputs(t){this.output.setValue(this.config.value,t)}getClassName(){return"FlowGraphConstantBlock"}serialize(t={},a=r){super.serialize(t),a("value",this.config.value,t.config)}};u("FlowGraphConstantBlock",e);export{e as a};

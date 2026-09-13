@@ -1,0 +1,2 @@
+globalThis.__ASSET_BASE__="/gta-sz-open-roads/";
+import{a as o}from"./chunk-VPX6AJQL.js";import{d as i}from"./chunk-3ODN7KUL.js";import{a as e}from"./chunk-FUUFYH4E.js";var t=class extends o{constructor(a){super(a),this.animationToPause=this.registerDataInput("animationToPause",i)}_execute(a){this.animationToPause.getValue(a).pause(),this.out._activateSignal(a)}getClassName(){return"FlowGraphPauseAnimationBlock"}};e("FlowGraphPauseAnimationBlock",t);export{t as a};

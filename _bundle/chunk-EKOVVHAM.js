@@ -1,0 +1,2 @@
+globalThis.__ASSET_BASE__="/gta-sz-open-roads/";
+import{a as s}from"./chunk-J7BFQWUD.js";import{g as o}from"./chunk-3ODN7KUL.js";import{a as i}from"./chunk-FUUFYH4E.js";var e=class extends s{constructor(t){super(t),this.condition=this.registerDataInput("condition",o),this.onTrue=this._registerSignalOutput("onTrue"),this.onFalse=this._registerSignalOutput("onFalse")}_execute(t){this.condition.getValue(t)?this.onTrue._activateSignal(t):this.onFalse._activateSignal(t)}getClassName(){return"FlowGraphBranchBlock"}};i("FlowGraphBranchBlock",e);export{e as a};

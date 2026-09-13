@@ -1,0 +1,18 @@
+globalThis.__ASSET_BASE__="/gta-sz-open-roads/";
+import{a as e}from"./chunk-HTIJ5P5S.js";var o="copyTextureToTexturePixelShader",r=`uniform float conversion;uniform sampler2D textureSampler;uniform float lodLevel;varying vec2 vUV;
+#include<helperFunctions>
+void main(void) 
+{
+#ifdef NO_SAMPLER
+vec4 color=texelFetch(textureSampler,ivec2(gl_FragCoord.xy),0);
+#else
+vec4 color=textureLod(textureSampler,vUV,lodLevel);
+#endif
+#ifdef DEPTH_TEXTURE
+gl_FragDepth=color.r;
+#else
+if (conversion==1.) {color=toLinearSpace(color);} else if (conversion==2.) {color=toGammaSpace(color);}
+gl_FragColor=color;
+#endif
+}
+`;e.ShadersStore[o]||(e.ShadersStore[o]=r);var c={name:o,shader:r};export{c as a};
