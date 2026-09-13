@@ -25,9 +25,27 @@ const failed = [];
 const notFound = [];
 const requests = [];
 
-page.on('pageerror', (e) => errors.push(String(e)));
+/**
+ * 已知的收尾噪音，不计入失败。
+ *
+ * `Rider asset: AbortError` 是步行角色模型的加载被"页面关闭"取消所产生：
+ * city-world.ts 的 catch 会打印它并继续（"仍可驾驶"），属于本脚本自己
+ * 关页面造成的产物，不是游戏缺陷。若不放行，它会把真正的回归刷掉。
+ */
+const BENIGN = [/Rider asset: AbortError/];
+const isBenign = (text) => BENIGN.some((re) => re.test(text));
+
+const benign = [];
+page.on('pageerror', (e) => {
+  const text = String(e);
+  if (isBenign(text)) benign.push(text);
+  else errors.push(text);
+});
 page.on('console', (m) => {
-  if (m.type() === 'error') errors.push('[console] ' + m.text());
+  if (m.type() !== 'error') return;
+  const text = '[console] ' + m.text();
+  if (isBenign(text)) benign.push(text);
+  else errors.push(text);
 });
 page.on('response', (r) => {
   requests.push(r.url());
@@ -117,6 +135,7 @@ console.log('\n=== 结论 ===');
 console.log('404 请求:', notFound.length, notFound.slice(0, 10));
 console.log('失败请求:', failed.length, failed.slice(0, 10));
 console.log('页面错误:', errors.length, errors.slice(0, 10));
+if (benign.length) console.log('已知收尾噪音（不计失败）:', benign.length, benign.slice(0, 3));
 console.log('速度提升:', speedAfter > speedBefore ? 'PASS' : 'FAIL');
 console.log('清晰度:', scalingOk && coversCanvas && lowStillSharp ? 'PASS' : 'FAIL');
 
