@@ -8,16 +8,26 @@
  * 采用 cache-first。代码（index.html 与 _bundle/）**刻意不接管** ——
  * 它们体积小、每次发版都变，交给浏览器 HTTP 缓存即可，这样就不存在"发版后拿到旧代码"的风险。
  *
+ * ⚠️ 路径要点（第一版就栽在这里）：
+ *   站点部署在子路径下，请求的 url.pathname 是
+ *     /gta-sz-open-roads/city/city.json
+ *   而不是 /city/city.json。因此必须先从 pathname 里剥掉部署基址，
+ *   否则所有匹配都会落空、SW 注册成功但一个字节都不会缓存。
+ *   基址从 self.registration.scope 推导，这样换部署路径也不用改代码。
+ *
  * 失效方式：改 CACHE 版本号。激活时会把所有旧版本缓存删掉。
  *
  * 容错：任何一步出错都直接回落到网络请求，最坏情况等于"没有 Service Worker"，
  * 不会让站点打不开。
  */
 
-const CACHE = 'shenchengji-assets-v1';
+const CACHE = 'shenchengji-assets-v2';
 
-// 只接管这些前缀下的资源；其余（含 HTML、_bundle、sw.js 自身）一律不拦截。
-const MANAGED = /^\/(?:city|assets|characters|data|licenses)\//;
+// 部署基址（含尾部斜杠），例如 '/gta-sz-open-roads/'
+const BASE = new URL(self.registration.scope).pathname;
+
+// 只接管这些目录下的资源；其余（含 HTML、_bundle、sw.js 自身）一律不拦截。
+const MANAGED = /^(?:city|assets|characters|data|licenses)\//;
 
 self.addEventListener('install', (event) => {
   // 立即接管，不等旧页面全部关闭
@@ -41,9 +51,10 @@ self.addEventListener('fetch', (event) => {
   let url;
   try { url = new URL(req.url); } catch { return; }
 
-  // 只管同源、且落在受管前缀下的请求
+  // 只管同源、且落在部署基址下受管目录里的请求
   if (url.origin !== self.location.origin) return;
-  if (!MANAGED.test(url.pathname)) return;
+  if (!url.pathname.startsWith(BASE)) return;
+  if (!MANAGED.test(url.pathname.slice(BASE.length))) return;
 
   event.respondWith((async () => {
     let cache = null;
