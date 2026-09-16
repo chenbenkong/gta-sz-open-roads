@@ -8,10 +8,27 @@
     <title>深城纪 · 一路向海</title>
     <link rel="icon" href="/gta-sz-open-roads/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/gta-sz-open-roads/_bundle/index-DHH4UKIX.css" />
+    <!--
+      入口模块提前发现：<script type="module"> 在 </body> 前，浏览器要等 HTML 解析到那里
+      才开始取入口，再逐层发现它 import 的 800+ 个 chunk（共 4 波）。
+      在 head 里声明 modulepreload 可让入口与 CSS 并行下载，省掉第一波往返。
+    -->
+    <link rel="modulepreload" href="/gta-sz-open-roads/_bundle/index-OMRQOVQ6.js" fetchpriority="high" />
   </head>
   <body>
     <canvas id="game" aria-label="深城纪三维游戏场景"></canvas>
     <div id="ui"></div>
     <script type="module" src="/gta-sz-open-roads/_bundle/index-OMRQOVQ6.js"></script>
+    <script>
+      // 城市资产约 187MB，而 GitHub Pages 只给 max-age=600。
+      // 用 Service Worker 把 city/assets/characters/data/licenses 做成 cache-first，
+      // 让第二次进入直接走磁盘。代码（index.html、_bundle）刻意不接管，避免发版后拿到旧代码。
+      // 注册失败或环境不支持时静默跳过，不影响游戏本体。
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/gta-sz-open-roads/sw.js').catch(function () {});
+        });
+      }
+    </script>
   </body>
 </html>
